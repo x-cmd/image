@@ -1,4 +1,4 @@
-FROM xcmd/alpine
+FROM --platform=$TARGETPLATFORM xcmd/alpine
 
 RUN x proxy apk set && \
     apk add -u dash bash zsh mksh && \

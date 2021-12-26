@@ -1,4 +1,5 @@
-FROM xcmd/debian
+
+FROM --platform=$TARGETPLATFORM xcmd/debian
 
 RUN x proxy apt set && \
     apt update && apt install --assume-yes bash zsh mksh && apt clean && \

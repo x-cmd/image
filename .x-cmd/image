@@ -8,7 +8,14 @@ buildx()(
     FILE="${3:?Provide Dockerfile}"
 
     cd "$(x wsroot)/$CDP" || return
+
+    # docker build \
+    #     --no-cache \
+    #     -f "$FILE" \
+    #     -t "$IMAGE"
+
     docker buildx build \
+        --no-cache \
         --platform linux/arm,linux/arm64,linux/amd64 \
         -f "$FILE" \
         -t "$IMAGE" . --push
@@ -16,15 +23,19 @@ buildx()(
 
 case "$op" in
 # Section: alpine
-    alpine)         x image alpine.base && x image alpine.dev           ;;
-    alpine.base)    buildx src/alpine xcmd/alpine base.Dockerfile       ;;
-    alpine.dev)     buildx src/alpine xcmd/alpine.dev dev.Dockerfile    ;;
+    alpine-curl)    buildx src/alpine xcmd/alpine-curl  curl.Dockerfile       ;;
+
+    alpine)         x image alpine-base && x image alpine-dev           ;;
+    alpine-base)    buildx src/alpine xcmd/alpine       base.Dockerfile       ;;
+    alpine-dev)     buildx src/alpine xcmd/alpine-dev   dev.Dockerfile    ;;
 # EndSection
 
 # Section: debian
-    debian)         x image debian.base && x image debian.dev           ;;
-    debian.base)    buildx src/debian xcmd/debian base.Dockerfile       ;;
-    debian.dev)     buildx src/debian xcmd/debian.dev dev.Dockerfile    ;;
+    debian-curl)    buildx src/debian xcmd/debian-curl curl.Dockerfile       ;;
+
+    debian)         x image debian-base && x image debian-dev           ;;
+    debian-base)    buildx src/debian xcmd/debian base.Dockerfile       ;;
+    debian-dev)     buildx src/debian xcmd/debian-dev dev.Dockerfile    ;;
 # EndSection
     *)              x image alpine && x image debian
 esac

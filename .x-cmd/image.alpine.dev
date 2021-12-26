@@ -1,8 +1,0 @@
-# xsh
-
-IMAGE=xcmd/alpine.dev
-
-(
-    cd $(x wsroot)/src/alpine
-    docker build -t $IMAGE -f dev.Dockerfile  .
-) && docker push $IMAGE

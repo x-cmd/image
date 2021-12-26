@@ -2,32 +2,29 @@
 
 op="$1";    shift
 
+buildx()(
+    CDP="${1:?Provide cd into path}"
+    IMAGE="${2:?Provide image}"
+    FILE="${3:?Provide Dockerfile}"
+
+    cd "$(x wsroot)/$CDP" || return
+    docker buildx build \
+        --platform linux/arm,linux/arm64,linux/amd64 \
+        -f "$FILE" \
+        -t "$IMAGE" . --push
+)
+
 case "$op" in
-
 # Section: alpine
-    alpine)
-        x image alpine.base && x image alpine.dev
-        ;;
-    alpine.base)
-        IMAGE=xcmd/alpine
-        (
-            cd $(x wsroot)/src/alpine
-            docker build -t $IMAGE -f base.Dockerfile  .
-        ) && docker push $IMAGE
-        ;;
-
-    alpine.dev)
-
-        IMAGE=xcmd/alpine.dev
-
-        (
-            cd $(x wsroot)/src/alpine
-            docker build -t $IMAGE -f dev.Dockerfile  .
-        ) && docker push $IMAGE
-        ;;
-
+    alpine)         x image alpine.base && x image alpine.dev           ;;
+    alpine.base)    buildx src/alpine xcmd/alpine base.Dockerfile       ;;
+    alpine.dev)     buildx src/alpine xcmd/alpine.dev dev.Dockerfile    ;;
 # EndSection
 
-    *)
-        x image alpine
+# Section: debian
+    debian)         x image debian.base && x image debian.dev           ;;
+    debian.base)    buildx src/debian xcmd/debian base.Dockerfile       ;;
+    debian.dev)     buildx src/debian xcmd/debian.dev dev.Dockerfile    ;;
+# EndSection
+    *)              x image alpine && x image debian
 esac

@@ -1,0 +1,33 @@
+#! /bin/sh # xsh
+
+op="$1";    shift
+
+case "$op" in
+
+# Section: alpine
+    alpine)
+        x image alpine.base && x image alpine.dev
+        ;;
+    alpine.base)
+        IMAGE=xcmd/alpine
+        (
+            cd $(x wsroot)/src/alpine
+            docker build -t $IMAGE -f base.Dockerfile  .
+        ) && docker push $IMAGE
+        ;;
+
+    alpine.dev)
+
+        IMAGE=xcmd/alpine.dev
+
+        (
+            cd $(x wsroot)/src/alpine
+            docker build -t $IMAGE -f dev.Dockerfile  .
+        ) && docker push $IMAGE
+        ;;
+
+# EndSection
+
+    *)
+        x image alpine
+esac

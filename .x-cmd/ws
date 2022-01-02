@@ -1,3 +1,9 @@
 # xrc
 
+# if [ -f "$(x wsroot)/.x-cmd/$1" ]; then
+#     x _ws "$@"
+# else
+#     x dev ws "$@"
+# fi
+
 x dev ws "$@"

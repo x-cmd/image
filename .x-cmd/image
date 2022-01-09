@@ -24,15 +24,15 @@ buildx()(
 case "$op" in
 # Section: alpine
 
-    alpine)           x image alpine-1-curl && x image alpine-2-dev           ;;
-    alpine-1-curl)    buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
-    alpine-2-dev)     buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
+    alpine)             x image alpine-1-curl && x image alpine-2-dev           ;;
+    alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
+    alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
 # EndSection
 
 # Section: debian
-    debian)           x image debian-1-curl && x image debian-2-dev           ;;
-    debian-1-curl)    buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
-    debian-2-dev)     buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
+    debian)             x image debian-1-curl && x image debian-2-dev           ;;
+    debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
+    debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
 # EndSection
-    *)              x image alpine && x image debian
+    *)                  x image alpine && x image debian
 esac

@@ -22,7 +22,7 @@ buildx()(
 )
 
 main(){
-    while [ "$#" -eq 0 ]; do
+    while [ "$#" -gt 0 ]; do
         op="$1";    shift
         case "$op" in
         # Section: alpine

@@ -13,6 +13,7 @@ jobs:
       run: |
         git clone https://github.com/x-cmd/image.git
         cd image
+        docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
         docker buildx create --use
         bash .x-cmd/image alpine
       env:

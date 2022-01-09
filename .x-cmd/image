@@ -22,22 +22,24 @@ buildx()(
 )
 
 main(){
-    op="$1";    shift
-    case "$op" in
-    # Section: alpine
+    while [ "$#" -eq 0 ]; do
+        op="$1";    shift
+        case "$op" in
+        # Section: alpine
 
-        alpine)             main alpine-1-curl && main alpine-2-dev           ;;
-        alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
-        alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
-    # EndSection
+            alpine)             main alpine-1-curl && main alpine-2-dev           ;;
+            alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
+            alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
+        # EndSection
 
-    # Section: debian
-        debian)             main debian-1-curl && main debian-2-dev           ;;
-        debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
-        debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
-    # EndSection
-        *)                  main alpine && main debian
-    esac
+        # Section: debian
+            debian)             main debian-1-curl && main debian-2-dev           ;;
+            debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
+            debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
+        # EndSection
+            *)                  main alpine && main debian
+        esac
+    done
 }
 
 main "$@"

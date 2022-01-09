@@ -1,7 +1,3 @@
-#! /bin/sh # xsh
-
-op="$1";    shift
-
 buildx()(
     CDP="${1:?Provide cd into path}"
     IMAGE="${2:?Provide image}"
@@ -21,18 +17,23 @@ buildx()(
         -t "$IMAGE" . --push
 )
 
-case "$op" in
-# Section: alpine
+main(){
+    op="$1";    shift
+    case "$op" in
+    # Section: alpine
 
-    alpine)             x image alpine-1-curl && x image alpine-2-dev           ;;
-    alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
-    alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
-# EndSection
+        alpine)             main alpine-1-curl && main alpine-2-dev           ;;
+        alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
+        alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
+    # EndSection
 
-# Section: debian
-    debian)             x image debian-1-curl && x image debian-2-dev           ;;
-    debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
-    debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
-# EndSection
-    *)                  x image alpine && x image debian
-esac
+    # Section: debian
+        debian)             main debian-1-curl && main debian-2-dev           ;;
+        debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
+        debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
+    # EndSection
+        *)                  main alpine && main debian
+    esac
+}
+
+main "$@"

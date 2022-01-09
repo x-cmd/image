@@ -1,9 +1,13 @@
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+cd ..
+
 buildx()(
     CDP="${1:?Provide cd into path}"
     IMAGE="${2:?Provide image}"
     FILE="${3:?Provide Dockerfile}"
 
-    cd "$(x wsroot)/$CDP" || return
+    cd "$CDP" || return
 
     # docker build \
     #     --no-cache \

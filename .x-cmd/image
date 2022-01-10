@@ -48,9 +48,9 @@ main(){
             centos-1-curl)      buildx src/centos xcmd/base-centos-1-curl  1-curl.Dockerfile   ;;
             centos-2-dev)       buildx src/centos xcmd/base-centos-2-dev   2-dev.Dockerfile    ;;
         # EndSection
-            *)                  main alpine && main debian && main ubuntu && main centos
+            all|*)                  main alpine && main debian && main ubuntu && main centos
         esac
     done
 }
 
-main
+main all

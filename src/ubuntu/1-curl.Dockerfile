@@ -1,3 +1,3 @@
-FROM --platform=$TARGETPLATFORM ubuntu:buster
+FROM --platform=$TARGETPLATFORM ubuntu
 
 RUN apt update && apt install --assume-yes curl && apt clean || true

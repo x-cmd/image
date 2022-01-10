@@ -16,7 +16,7 @@ buildx()(
 
     docker buildx build \
         --no-cache \
-        --platform linux/arm,linux/arm64,linux/amd64 \
+        --platform "${PLATFORM:-linux/arm,linux/arm64,linux/amd64}" \
         -f "$FILE" \
         -t "$IMAGE" . --push
 )
@@ -45,10 +45,10 @@ main(){
 
         # Section: centos
             centos)             main centos-1-curl && main centos-2-dev           ;;
-            centos-1-curl)      buildx src/centos xcmd/base-centos-1-curl  1-curl.Dockerfile   ;;
-            centos-2-dev)       buildx src/centos xcmd/base-centos-2-dev   2-dev.Dockerfile    ;;
+            centos-1-curl)      PLATFORM=linux/arm64,linux/amd64 buildx src/centos xcmd/base-centos-1-curl  1-curl.Dockerfile   ;;
+            centos-2-dev)       PLATFORM=linux/arm64,linux/amd64 buildx src/centos xcmd/base-centos-2-dev   2-dev.Dockerfile    ;;
         # EndSection
-            all|*)                  main alpine && main debian && main ubuntu && main centos
+            all|*)              main alpine && main debian && main ubuntu && main centos
         esac
     done
 }

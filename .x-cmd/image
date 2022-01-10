@@ -37,7 +37,13 @@ main(){
             debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
             debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
         # EndSection
-            *)                  main alpine && main debian
+
+        # Section: ubuntu
+            ubuntu)             main ubuntu-1-curl && main ubuntu-2-dev           ;;
+            ubuntu-1-curl)      buildx src/ubuntu xcmd/base-ubuntu-1-curl  1-curl.Dockerfile   ;;
+            ubuntu-2-dev)       buildx src/ubuntu xcmd/base-ubuntu-2-dev   2-dev.Dockerfile    ;;
+        # EndSection
+            *)                  main alpine && main debian & main ubuntu
         esac
     done
 }

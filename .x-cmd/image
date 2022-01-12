@@ -1,6 +1,6 @@
 
-cd "$(dirname "${BASH_SOURCE[0]}")"
-cd ..
+# cd "$(dirname "${BASH_SOURCE[0]}")"
+# cd ..
 
 buildx()(
     CDP="${1:?Provide cd into path}"
@@ -31,6 +31,17 @@ main(){
             alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
         # EndSection
 
+        # Section: bash3 bash4 bash5
+            bash)
+                for i in 3 4 5 ; do
+                    main "bash${i}-1-curl" && main "bash${i}-2-dev"
+                done
+                ;;
+            bash*-*-*)
+                local version=${op#bash}
+                buildx src/bash "xcmd/base-${op}" "${version}.Dockerfile"   ;;
+        # EndSection
+
         # Section: debian
             debian)             main debian-1-curl && main debian-2-dev           ;;
             debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
@@ -53,4 +64,5 @@ main(){
     done
 }
 
-main all
+# main all
+main $1

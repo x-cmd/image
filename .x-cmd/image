@@ -64,5 +64,4 @@ main(){
     done
 }
 
-# main all
-main $1
+main all

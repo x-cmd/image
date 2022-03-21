@@ -22,8 +22,8 @@ buildx()(
 )
 
 rename_pushx(){
-    docker tag "xcmd/base-ubuntu-1-curl:18" "xcmd/ubuntu:18"
-    docker push "xcmd/ubuntu:18"
+    docker tag "${1:?Provide source image}" "${2:?Provide target image}"
+    docker push "${2}"
     # TODO: Multiple Arch ?
 }
 

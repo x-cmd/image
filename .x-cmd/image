@@ -21,6 +21,12 @@ buildx()(
         -t "$IMAGE" . --push
 )
 
+rename_pushx(){
+    docker tag "xcmd/base-ubuntu-1-curl:18" "xcmd/ubuntu:18"
+    docker push "xcmd/ubuntu:18"
+    # TODO: Multiple Arch ?
+}
+
 main(){
     while [ "$#" -gt 0 ]; do
         op="$1";    shift
@@ -49,9 +55,22 @@ main(){
         # EndSection
 
         # Section: ubuntu
-            ubuntu)             main ubuntu-1-curl && main ubuntu-2-dev           ;;
-            ubuntu-1-curl)      buildx src/ubuntu xcmd/base-ubuntu-1-curl  1-curl.Dockerfile   ;;
-            ubuntu-2-dev)       buildx src/ubuntu xcmd/base-ubuntu-2-dev   2-dev.Dockerfile    ;;
+            ubuntu)             main ubuntu:20
+                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/ubuntu"
+                                ;;
+            ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18
+                                rename_pushx "xcmd/base-ubuntu-1-curl:18" "xcmd/ubuntu:18"
+                                ;;
+            ubuntu:20)          main ubuntu-1-curl:20 && main ubuntu-2-dev:20
+                                rename_pushx "xcmd/base-ubuntu-1-curl:20" "xcmd/ubuntu:20"
+                                ;;
+            ubuntu:22)          main ubuntu-1-curl:22 && main ubuntu-2-dev:22
+                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/ubuntu:22"
+                                ;;
+            ubuntu-1-curl:*)    version="${op#*:}"
+                                buildx src/ubuntu "xcmd/base-ubuntu-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
+            ubuntu-2-dev:*)     version="${op#*:}"
+                                buildx src/ubuntu "xcmd/base-ubuntu-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
         # EndSection
 
         # Section: centos

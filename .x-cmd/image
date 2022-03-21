@@ -146,9 +146,9 @@ main_gentoo(){
 main_opensuse(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
-        opensuse)             main_opensuse opensuse-1-curl && main_opensuse opensuse-2-dev      ;;
-        opensuse-1-curl)      buildx src/opensuse xcmd/base-opensuse-1-curl  1-curl.Dockerfile   ;;
-        opensuse-2-dev)       buildx src/opensuse xcmd/base-opensuse-2-dev   2-dev.Dockerfile    ;;
+        opensuse)           main_opensuse opensuse-1-curl && main_opensuse opensuse-2-dev      ;;
+        opensuse-1-curl)    buildx src/opensuse xcmd/base-opensuse-1-curl  1-curl.Dockerfile   ;;
+        opensuse-2-dev)     buildx src/opensuse xcmd/base-opensuse-2-dev   2-dev.Dockerfile    ;;
     esac
 }
 # EndSection
@@ -157,16 +157,16 @@ main(){
     while [ "$#" -gt 0 ]; do
         op="$1";    shift
         case "$op" in
-            alpine*)            main_alpine     "$op" "$@" ;;
-            bash*)              main_bash       "$op" "$@" ;;
-            debian*)            main_debian     "$op" "$@" ;;
-            ubuntu*)            main_ubuntu     "$op" "$@" ;;
-            centos*)            main_centos     "$op" "$@" ;;
-            arch*)              main_arch       "$op" "$@" ;;
-            fedora*)            main_fedora     "$op" "$@" ;;
-            gentoo*)            main_gentoo     "$op" "$@" ;;
-            opensuse*)          main_opensuse   "$op" "$@" ;;
-            all|*)              main alpine && main debian && main ubuntu && main centos
+            alpine*)        main_alpine     "$op" "$@" ;;
+            bash*)          main_bash       "$op" "$@" ;;
+            debian*)        main_debian     "$op" "$@" ;;
+            ubuntu*)        main_ubuntu     "$op" "$@" ;;
+            centos*)        main_centos     "$op" "$@" ;;
+            arch*)          main_arch       "$op" "$@" ;;
+            fedora*)        main_fedora     "$op" "$@" ;;
+            gentoo*)        main_gentoo     "$op" "$@" ;;
+            opensuse*)      main_opensuse   "$op" "$@" ;;
+            all|*)          main alpine && main debian && main ubuntu && main centos
         esac
     done
 }

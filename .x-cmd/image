@@ -56,16 +56,13 @@ main(){
 
         # Section: ubuntu
             ubuntu)             main ubuntu:20
-                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/ubuntu"
+                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "base-ubuntu-1-curl"
                                 ;;
             ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18
-                                rename_pushx "xcmd/base-ubuntu-1-curl:18" "xcmd/ubuntu:18"
                                 ;;
             ubuntu:20)          main ubuntu-1-curl:20 && main ubuntu-2-dev:20
-                                rename_pushx "xcmd/base-ubuntu-1-curl:20" "xcmd/ubuntu:20"
                                 ;;
             ubuntu:22)          main ubuntu-1-curl:22 && main ubuntu-2-dev:22
-                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/ubuntu:22"
                                 ;;
             ubuntu-1-curl:*)    version="${op#*:}"
                                 buildx src/ubuntu "xcmd/base-ubuntu-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;

@@ -24,6 +24,7 @@ buildx()(
 
         # TODO: findout which specific platform is not supported by the specific os release.
         # exit 1
+        return 1
     fi
 )
 
@@ -33,83 +34,128 @@ rename_pushx(){
     # TODO: Multiple Arch ?
 }
 
+# Section: alpine
+main_alpine(){
+    case "$op" in
+        alpine)             main alpine-1-curl && main alpine-2-dev    ;;
+        alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
+        alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
+# Section: debian
+main_debian(){
+    case "$op" in
+        debian)             local i; for i in debian:11 debian:10 debian:9; do main "$i"; done
+                            # rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
+                            ;;
+        debian:9)           main debian-1-curl:9 && main debian-2-dev:9 ;;
+        debian:10)          main debian-1-curl:10 && main debian-2-dev:10 ;;
+        debian:11)          main debian-1-curl:11 && main debian-2-dev:11 ;;
+        debian-1-curl:*)    version="${op#*:}"
+                            buildx src/debian "xcmd/base-debian-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
+        debian-2-dev:*)     version="${op#*:}"
+                            buildx src/debian "xcmd/base-debian-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
+    esac
+}
+# EndSection
+
+# Section: ubuntu
+main_ubuntu(){
+    case "$op" in
+        ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18; do main "$i"; done
+                            # rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
+                            ;;
+        ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18 ;;
+        ubuntu:20)          main ubuntu-1-curl:20 && main ubuntu-2-dev:20 ;;
+        ubuntu:22)          main ubuntu-1-curl:22 && main ubuntu-2-dev:22 ;;
+        ubuntu-1-curl:*)    version="${op#*:}"
+                            buildx src/ubuntu "xcmd/base-ubuntu-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
+        ubuntu-2-dev:*)     version="${op#*:}"
+                            buildx src/ubuntu "xcmd/base-ubuntu-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
+    esac
+}
+# EndSection
+
+# Section: bash3 bash4 bash5
+main_bash(){
+    case "$op" in
+        bash)
+            for i in 3 4 5 ; do
+                main "bash${i}-1-curl" && main "bash${i}-2-dev"
+            done
+            ;;
+        bash*-*-*)
+            local version=${op#bash}
+            buildx src/bash "xcmd/base-${op}" "${version}.Dockerfile"   ;;
+    esac
+}
+# EndSection
+
+# Section: centos
+main_centos(){
+    case "$op" in
+        centos)             main centos-1-curl && main centos-2-dev           ;;
+        centos-1-curl)      PLATFORM=linux/arm64,linux/amd64 buildx src/centos xcmd/base-centos-1-curl  1-curl.Dockerfile   ;;
+        centos-2-dev)       PLATFORM=linux/arm64,linux/amd64 buildx src/centos xcmd/base-centos-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
+# Section: arch
+main_arch(){
+    case "$op" in
+        archlinux)          main archlinux-1-curl && main archlinux-2-dev           ;;
+        archlinux-1-curl)   PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-1-curl  1-curl.Dockerfile   ;;
+        archlinux-2-dev)    PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
+# Section: fedora
+main_fedora(){
+    case "$op" in
+        fedora)             main fedora-1-curl && main fedora-2-dev           ;;
+        fedora-1-curl)      PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-1-curl  1-curl.Dockerfile   ;;
+        fedora-2-dev)       PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
+# Section: gentoo
+main_gentoo(){
+    case "$op" in
+        gentoo)             main gentoo-1-curl && main gentoo-2-dev           ;;
+        gentoo-1-curl)      buildx src/gentoo xcmd/base-gentoo-1-curl  1-curl.Dockerfile   ;;
+        gentoo-2-dev)       buildx src/gentoo xcmd/base-gentoo-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
+# Section: opensuse
+main_opensuse(){
+    case "$op" in
+        opensuse)             main opensuse-1-curl && main opensuse-2-dev           ;;
+        opensuse-1-curl)      buildx src/opensuse xcmd/base-opensuse-1-curl  1-curl.Dockerfile   ;;
+        opensuse-2-dev)       buildx src/opensuse xcmd/base-opensuse-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
 main(){
     while [ "$#" -gt 0 ]; do
         op="$1";    shift
         case "$op" in
-        # Section: alpine
-            alpine)             main alpine-1-curl && main alpine-2-dev           ;;
-            alpine-1-curl)      buildx src/alpine xcmd/base-alpine-1-curl  1-curl.Dockerfile   ;;
-            alpine-2-dev)       buildx src/alpine xcmd/base-alpine-2-dev   2-dev.Dockerfile    ;;
-        # EndSection
-
-        # Section: bash3 bash4 bash5
-            bash)
-                for i in 3 4 5 ; do
-                    main "bash${i}-1-curl" && main "bash${i}-2-dev"
-                done
-                ;;
-            bash*-*-*)
-                local version=${op#bash}
-                buildx src/bash "xcmd/base-${op}" "${version}.Dockerfile"   ;;
-        # EndSection
-
-        # Section: debian
-            debian)             local i; for i in debian:11 debian:10 debian:9; do main "$i"; done
-                                # rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
-                                ;;
-            debian:9)           main debian-1-curl:9 && main debian-2-dev:9 ;;
-            debian:10)          main debian-1-curl:10 && main debian-2-dev:10 ;;
-            debian:11)          main debian-1-curl:11 && main debian-2-dev:11 ;;
-            debian-1-curl:*)    version="${op#*:}"
-                                buildx src/debian "xcmd/base-debian-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
-            debian-2-dev:*)     version="${op#*:}"
-                                buildx src/debian "xcmd/base-debian-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
-        # EndSection
-
-        # Section: ubuntu
-            ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18; do main "$i"; done
-                                # rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
-                                ;;
-            ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18 ;;
-            ubuntu:20)          main ubuntu-1-curl:20 && main ubuntu-2-dev:20 ;;
-            ubuntu:22)          main ubuntu-1-curl:22 && main ubuntu-2-dev:22 ;;
-            ubuntu-1-curl:*)    version="${op#*:}"
-                                buildx src/ubuntu "xcmd/base-ubuntu-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
-            ubuntu-2-dev:*)     version="${op#*:}"
-                                buildx src/ubuntu "xcmd/base-ubuntu-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
-        # EndSection
-
-        # Section: centos
-            centos)             main centos-1-curl && main centos-2-dev           ;;
-            centos-1-curl)      PLATFORM=linux/arm64,linux/amd64 buildx src/centos xcmd/base-centos-1-curl  1-curl.Dockerfile   ;;
-            centos-2-dev)       PLATFORM=linux/arm64,linux/amd64 buildx src/centos xcmd/base-centos-2-dev   2-dev.Dockerfile    ;;
-        # EndSection
-
-        # Section: arch
-            archlinux)          main archlinux-1-curl && main archlinux-2-dev           ;;
-            archlinux-1-curl)   PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-1-curl  1-curl.Dockerfile   ;;
-            archlinux-2-dev)    PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-2-dev   2-dev.Dockerfile    ;;
-        # EndSection
-
-        # Section: fedora
-            fedora)             main fedora-1-curl && main fedora-2-dev           ;;
-            fedora-1-curl)      PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-1-curl  1-curl.Dockerfile   ;;
-            fedora-2-dev)       PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-2-dev   2-dev.Dockerfile    ;;
-        # EndSection
-
-        # Section: gentoo
-            gentoo)             main gentoo-1-curl && main gentoo-2-dev           ;;
-            gentoo-1-curl)      buildx src/gentoo xcmd/base-gentoo-1-curl  1-curl.Dockerfile   ;;
-            gentoo-2-dev)       buildx src/gentoo xcmd/base-gentoo-2-dev   2-dev.Dockerfile    ;;
-        # EndSection
-
-        # Section: opensuse
-            opensuse)             main opensuse-1-curl && main opensuse-2-dev           ;;
-            opensuse-1-curl)      buildx src/opensuse xcmd/base-opensuse-1-curl  1-curl.Dockerfile   ;;
-            opensuse-2-dev)       buildx src/opensuse xcmd/base-opensuse-2-dev   2-dev.Dockerfile    ;;
-        # EndSection
-
+            alpine*)            main_debian "$@" ;;
+            bash*)              main_bash "$@" ;;
+            debian*)            main_debian "$@" ;;
+            ubuntu*)            main_ubuntu "$@" ;;
+            centos*)            main_ubuntu "$@" ;;
+            archlinux*)         main_ubuntu "$@" ;;
+            fedora*)            main_fedora "$@" ;;
+            gentoo*)            main_gentoo "$@" ;;
+            opensuse*)          main_opensuse "$@" ;;
             all|*)              main alpine && main debian && main ubuntu && main centos
         esac
     done

@@ -115,4 +115,4 @@ main(){
     done
 }
 
-main ubuntu
+main debian

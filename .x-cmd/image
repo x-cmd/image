@@ -61,27 +61,27 @@ main(){
         # EndSection
 
         # Section: arch
-        archlinux)             main archlinux-1-curl && main archlinux-2-dev           ;;
-        archlinux-1-curl)      PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-1-curl  1-curl.Dockerfile   ;;
-        archlinux-2-dev)       PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-2-dev   2-dev.Dockerfile    ;;
+            archlinux)             main archlinux-1-curl && main archlinux-2-dev           ;;
+            archlinux-1-curl)      PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-1-curl  1-curl.Dockerfile   ;;
+            archlinux-2-dev)       PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-2-dev   2-dev.Dockerfile    ;;
         # EndSection
 
         # Section: fedora
-        fedora)             main fedora-1-curl && main fedora-2-dev           ;;
-        fedora-1-curl)      PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-1-curl  1-curl.Dockerfile   ;;
-        fedora-2-dev)       PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-2-dev   2-dev.Dockerfile    ;;
+            fedora)             main fedora-1-curl && main fedora-2-dev           ;;
+            fedora-1-curl)      PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-1-curl  1-curl.Dockerfile   ;;
+            fedora-2-dev)       PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-2-dev   2-dev.Dockerfile    ;;
         # EndSection
 
         # Section: gentoo
-        gentoo)             main gentoo-1-curl && main gentoo-2-dev           ;;
-        gentoo-1-curl)      buildx src/gentoo xcmd/base-gentoo-1-curl  1-curl.Dockerfile   ;;
-        gentoo-2-dev)       buildx src/gentoo xcmd/base-gentoo-2-dev   2-dev.Dockerfile    ;;
+            gentoo)             main gentoo-1-curl && main gentoo-2-dev           ;;
+            gentoo-1-curl)      buildx src/gentoo xcmd/base-gentoo-1-curl  1-curl.Dockerfile   ;;
+            gentoo-2-dev)       buildx src/gentoo xcmd/base-gentoo-2-dev   2-dev.Dockerfile    ;;
         # EndSection
 
         # Section: opensuse
-        opensuse)             main opensuse-1-curl && main opensuse-2-dev           ;;
-        opensuse-1-curl)      buildx src/opensuse xcmd/base-opensuse-1-curl  1-curl.Dockerfile   ;;
-        opensuse-2-dev)       buildx src/opensuse xcmd/base-opensuse-2-dev   2-dev.Dockerfile    ;;
+            opensuse)             main opensuse-1-curl && main opensuse-2-dev           ;;
+            opensuse-1-curl)      buildx src/opensuse xcmd/base-opensuse-1-curl  1-curl.Dockerfile   ;;
+            opensuse-2-dev)       buildx src/opensuse xcmd/base-opensuse-2-dev   2-dev.Dockerfile    ;;
         # EndSection
 
             all|*)              main alpine && main debian && main ubuntu && main centos

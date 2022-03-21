@@ -104,7 +104,7 @@ main_centos(){
 # EndSection
 
 # Section: arch
-main_arch(){
+main_archlinux(){
     case "$op" in
         archlinux)          main archlinux-1-curl && main archlinux-2-dev           ;;
         archlinux-1-curl)   PLATFORM=linux/amd64 buildx src/archlinux xcmd/base-archlinux-1-curl  1-curl.Dockerfile   ;;
@@ -151,8 +151,8 @@ main(){
             bash*)              main_bash "$@" ;;
             debian*)            main_debian "$@" ;;
             ubuntu*)            main_ubuntu "$@" ;;
-            centos*)            main_ubuntu "$@" ;;
-            archlinux*)         main_ubuntu "$@" ;;
+            centos*)            main_centos "$@" ;;
+            archlinux*)         main_archlinux "$@" ;;
             fedora*)            main_fedora "$@" ;;
             gentoo*)            main_gentoo "$@" ;;
             opensuse*)          main_opensuse "$@" ;;

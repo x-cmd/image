@@ -113,9 +113,9 @@ main_centos(){
 main_arch(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
-        arch)          main_arch arch-1-curl && main_arch arch-2-dev           ;;
-        arch-1-curl)   PLATFORM=linux/amd64 buildx src/arch xcmd/base-arch-1-curl  1-curl.Dockerfile   ;;
-        arch-2-dev)    PLATFORM=linux/amd64 buildx src/arch xcmd/base-arch-2-dev   2-dev.Dockerfile    ;;
+        arch)               main_arch arch-1-curl && main_arch arch-2-dev           ;;
+        arch-1-curl)        PLATFORM=linux/amd64 buildx src/arch xcmd/base-arch-1-curl  1-curl.Dockerfile   ;;
+        arch-2-dev)         PLATFORM=linux/amd64 buildx src/arch xcmd/base-arch-2-dev   2-dev.Dockerfile    ;;
     esac
 }
 # EndSection

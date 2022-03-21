@@ -14,11 +14,15 @@ buildx()(
     #     -f "$FILE" \
     #     -t "$IMAGE"
 
-    docker buildx build \
+    if ! docker buildx build \
         --no-cache \
         --platform "${PLATFORM:-linux/arm,linux/arm64,linux/amd64}" \
         -f "$FILE" \
-        -t "$IMAGE" . --push
+        -t "$IMAGE" . --push; then
+
+        printf "%s\n" "Buildx fail. $IMAGE" >&2
+        exit 1
+    fi
 )
 
 rename_pushx(){
@@ -50,7 +54,7 @@ main(){
 
         # Section: debian
             debian)             local i; for i in debian:11 debian:10 debian:9; do main "$i"; done
-                                rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
+                                # rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
                                 ;;
             debian:9)           main debian-1-curl:9 && main debian-2-dev:9 ;;
             debian:10)          main debian-1-curl:10 && main debian-2-dev:10 ;;
@@ -63,7 +67,7 @@ main(){
 
         # Section: ubuntu
             ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18; do main "$i"; done
-                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
+                                # rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
                                 ;;
             ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18
                                 ;;
@@ -112,4 +116,4 @@ main(){
     done
 }
 
-main ubuntu
+main ubuntu:22

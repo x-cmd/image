@@ -49,14 +49,21 @@ main(){
         # EndSection
 
         # Section: debian
-            debian)             main debian-1-curl && main debian-2-dev           ;;
-            debian-1-curl)      buildx src/debian xcmd/base-debian-1-curl  1-curl.Dockerfile   ;;
-            debian-2-dev)       buildx src/debian xcmd/base-debian-2-dev   2-dev.Dockerfile    ;;
+            debian)             local i; for i in debian:11 debian:10 debian:9; do main "$i"; done
+                                rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
+                                ;;
+            debian:9)           main debian-1-curl:9 && main debian-2-dev:9 ;;
+            debian:10)          main debian-1-curl:10 && main debian-2-dev:10 ;;
+            debian:11)          main debian-1-curl:11 && main debian-2-dev:11 ;;
+            debian-1-curl:*)    version="${op#*:}"
+                                buildx src/debian "xcmd/base-debian-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
+            debian-2-dev:*)     version="${op#*:}"
+                                buildx src/debian "xcmd/base-debian-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
         # EndSection
 
         # Section: ubuntu
-            ubuntu)             for i in ubuntu:22 ubuntu:20 ubuntu:18; do  main "$i"; done
-                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "base-ubuntu-1-curl"
+            ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18; do main "$i"; done
+                                rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
                                 ;;
             ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18
                                 ;;

@@ -147,7 +147,7 @@ main(){
     while [ "$#" -gt 0 ]; do
         op="$1";    shift
         case "$op" in
-            alpine*)            main_debian "$@" ;;
+            alpine*)            main_alpine "$@" ;;
             bash*)              main_bash "$@" ;;
             debian*)            main_debian "$@" ;;
             ubuntu*)            main_ubuntu "$@" ;;

@@ -152,7 +152,7 @@ main(){
             debian*)            main_debian "$@" ;;
             ubuntu*)            main_ubuntu "$@" ;;
             centos*)            main_centos "$@" ;;
-            archlinux*)         main_arch "$@" ;;
+            arch*)              main_arch "$@" ;;
             fedora*)            main_fedora "$@" ;;
             gentoo*)            main_gentoo "$@" ;;
             opensuse*)          main_opensuse "$@" ;;

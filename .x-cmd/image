@@ -55,7 +55,7 @@ main(){
         # EndSection
 
         # Section: ubuntu
-            ubuntu)             main ubuntu:20
+            ubuntu)             for i in ubuntu:22 ubuntu:20 ubuntu:18; do  main "$i"; done
                                 rename_pushx "xcmd/base-ubuntu-1-curl:22" "base-ubuntu-1-curl"
                                 ;;
             ubuntu:18)          main ubuntu-1-curl:18 && main ubuntu-2-dev:18
@@ -105,4 +105,4 @@ main(){
     done
 }
 
-main all
+main ubuntu

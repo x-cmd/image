@@ -1,3 +1,4 @@
+# Section: utils
 
 # cd "$(dirname "${BASH_SOURCE[0]}")"
 # cd ..
@@ -33,6 +34,7 @@ rename_pushx(){
     docker push "${2}"
     # TODO: Multiple Arch ?
 }
+# EndSection
 
 # Section: alpine
 main_alpine(){
@@ -161,4 +163,4 @@ main(){
     done
 }
 
-main debian
+main all

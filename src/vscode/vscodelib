@@ -1,14 +1,21 @@
 #!/bin/bash
 
-function download(){
+function download() {
     commit_sha="${1:-dfd34e8260c270da74b5c2d86d61aee4b6d56977}"
 
     archive="vscode-server-linux-x64.tar.gz"
 
     echo "will attempt to download VS Code Server version = '${commit_sha}'"
 
+    local url="https://update.code.visualstudio.com/commit:${commit_sha}/server-linux-arm64/stable"
+    case "$(arch)" in
+        aarch64) ;;
+        *) url="https://update.code.visualstudio.com/commit:${commit_sha}/server-linux-x64/stable" ;;
+    esac
+    # url="https://update.code.visualstudio.com/commit:${commit_sha}/server-linux-x64/stable"
+
     # Download VS Code Server tarball to tmp directory.
-    curl -L "https://update.code.visualstudio.com/commit:${commit_sha}/server-linux-x64/stable" -o "/tmp/${archive}"
+    curl -L "$url" -o "/tmp/${archive}"
 
     # Make the parent directory where the server should live.
     # NOTE: Ensure VS Code will have read/write access; namely the user running VScode or container user.
@@ -20,30 +27,29 @@ function download(){
     rm "/tmp/${archive}" && echo "Removed archieve."
 }
 
-
 # Auto-Get the latest commit sha via command line.
 get_latest_release() (
     local owner="${OWNER:-microsoft}"
     local repo="${REPO:-vscode}"
 
     tag=$(curl --silent "https://api.github.com/repos/${owner}/${repo}/releases/latest" | # Get latest release from GitHub API
-          grep '"tag_name":'                                              | # Get tag line
-          sed -E 's/.*"([^"]+)".*/\1/'                                    ) # Pluck JSON value
+        grep '"tag_name":' |                                                              # Get tag line
+        sed -E 's/.*"([^"]+)".*/\1/')                                                     # Pluck JSON value
 
     tag_data=$(curl --silent "https://api.github.com/repos/${owner}/${repo}/git/ref/tags/${tag}")
 
-    sha=$(echo "${tag_data}"           | # Get latest release from GitHub API
-          grep '"sha":'                | # Get tag line
-          sed -E 's/.*"([^"]+)".*/\1/' ) # Pluck JSON value
+    sha=$(echo "${tag_data}" |        # Get latest release from GitHub API
+        grep '"sha":' |               # Get tag line
+        sed -E 's/.*"([^"]+)".*/\1/') # Pluck JSON value
 
-    sha_type=$(echo "${tag_data}"           | # Get latest release from GitHub API
-          grep '"type":'                    | # Get tag line
-          sed -E 's/.*"([^"]+)".*/\1/'      ) # Pluck JSON value
+    sha_type=$(echo "${tag_data}" |   # Get latest release from GitHub API
+        grep '"type":' |              # Get tag line
+        sed -E 's/.*"([^"]+)".*/\1/') # Pluck JSON value
 
     if [[ "${sha_type}" != "commit" ]]; then
         combo_sha=$(curl -s "https://api.github.com/repos/${owner}/${repo}/git/tags/${sha}" | # Get latest release from GitHub API
-              grep '"sha":'                                                     | # Get tag line
-              sed -E 's/.*"([^"]+)".*/\1/'                                      ) # Pluck JSON value
+            grep '"sha":' |                                                                   # Get tag line
+            sed -E 's/.*"([^"]+)".*/\1/')                                                     # Pluck JSON value
 
         # Remove the tag sha, leaving only the commit sha;
         # this won't work if there are ever more than 2 sha,
@@ -53,4 +59,3 @@ get_latest_release() (
 
     printf "%s\n" "${sha}"
 )
-

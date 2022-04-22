@@ -4,5 +4,5 @@ FROM xcmd/base-alpine-2-dev
 ADD bashrc /root/___x_cmd_bashrc
 RUN cat ___x_cmd_bashrc | tee -a ~/.bashrc ~/.zshrc
 
-ADD install-vscode-server /root/install-vscode-server
-RUN /bin/sh /root/install-vscode-server
+ADD vscodelib /root/vscodelib
+RUN . /root/vscodelib && download "$(get_latest_release)"

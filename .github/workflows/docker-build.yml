@@ -15,7 +15,7 @@ jobs:
         cd image
         docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
         docker buildx create --use
-        bash .x-cmd/image alpine debian ubuntu
+        bash .x-cmd/image debian
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

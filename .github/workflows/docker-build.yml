@@ -15,6 +15,7 @@ jobs:
         cd image
         docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
         docker buildx create --use
+        set +e
         bash .x-cmd/image centos
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

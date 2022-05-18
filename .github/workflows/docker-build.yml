@@ -16,7 +16,7 @@ jobs:
         docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
         docker buildx create --use
         set +e
-        bash .x-cmd/image gentoo
+        bash .x-cmd/image fedora
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

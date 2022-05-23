@@ -72,16 +72,17 @@ main_debian(){
 main_ubuntu(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
-        ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18 latest; do main_ubuntu "$i"; done
+        ubuntu)             # local i; for i in ubuntu:22 ubuntu:20 ubuntu:18 latest; do main_ubuntu "$i"; done
+                            local i; for i in latest; do main_ubuntu "$i"; done
                             # rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
                             ;;
-        ubuntu:18)          main_ubuntu ubuntu-1-curl:18 && main_ubuntu ubuntu-2-dev:18 ;;
-        ubuntu:20)          main_ubuntu ubuntu-1-curl:20 && main_ubuntu ubuntu-2-dev:20 ;;
-        ubuntu:22)          main_ubuntu ubuntu-1-curl:22 && main_ubuntu ubuntu-2-dev:22 ;;
-        ubuntu-1-curl:*)    version="${op#*:}"
-                            buildx src/ubuntu "xcmd/base-ubuntu-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
-        ubuntu-2-dev:*)     version="${op#*:}"
-                            buildx src/ubuntu "xcmd/base-ubuntu-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
+        # ubuntu:18)          main_ubuntu ubuntu-1-curl:18 && main_ubuntu ubuntu-2-dev:18 ;;
+        # ubuntu:20)          main_ubuntu ubuntu-1-curl:20 && main_ubuntu ubuntu-2-dev:20 ;;
+        # ubuntu:22)          main_ubuntu ubuntu-1-curl:22 && main_ubuntu ubuntu-2-dev:22 ;;
+        # ubuntu-1-curl:*)    version="${op#*:}"
+        #                     buildx src/ubuntu "xcmd/base-ubuntu-1-curl:$version"  "1-curl.$version.Dockerfile"   ;;
+        # ubuntu-2-dev:*)     version="${op#*:}"
+        #                     buildx src/ubuntu "xcmd/base-ubuntu-2-dev:$version"   "2-dev.$version.Dockerfile"    ;;
         latest)
                             buildx src/ubuntu "xcmd/base-ubuntu-1-curl"  "curl.latest.Dockerfile"
                             buildx src/ubuntu "xcmd/base-ubuntu-2-dev"   "dev.latest.Dockerfile"          ;;

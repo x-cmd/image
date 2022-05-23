@@ -15,9 +15,10 @@ buildx()(
     #     -f "$FILE" \
     #     -t "$IMAGE"
 
+    # --platform "${PLATFORM:-linux/arm,linux/arm64,linux/amd64}"   \
     if ! docker buildx build \
         --no-cache \
-        --platform "${PLATFORM:-linux/arm,linux/arm64,linux/amd64}" \
+        --platform "${PLATFORM:-linux/arm,linux/arm64}" \
         -f "$FILE" \
         -t "$IMAGE" . --push; then
 

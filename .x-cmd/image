@@ -1,3 +1,5 @@
+# shellcheck shell=sh disable=SC3043
+
 # Section: utils
 
 # cd "$(dirname "${BASH_SOURCE[0]}")"
@@ -160,14 +162,14 @@ main(){
         op="$1";    shift
         case "$op" in
             alpine*)        main_alpine     "$op" "$@" ;;
-            bash*)          main_bash       "$op" "$@" ;;
             debian*)        main_debian     "$op" "$@" ;;
             ubuntu*)        main_ubuntu     "$op" "$@" ;;
             centos*)        main_centos     "$op" "$@" ;;
-            arch*)          main_arch       "$op" "$@" ;;
-            fedora*)        main_fedora     "$op" "$@" ;;
-            gentoo*)        main_gentoo     "$op" "$@" ;;
-            opensuse*)      main_opensuse   "$op" "$@" ;;
+            # arch*)          main_arch       "$op" "$@" ;;
+            # fedora*)        main_fedora     "$op" "$@" ;;
+            # gentoo*)        main_gentoo     "$op" "$@" ;;
+            # bash*)          main_bash       "$op" "$@" ;;
+            # opensuse*)      main_opensuse   "$op" "$@" ;;
             all|*)          main alpine && main debian && main ubuntu && main centos
         esac
     done

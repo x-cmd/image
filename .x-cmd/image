@@ -52,7 +52,8 @@ main_alpine(){
 main_debian(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
-        debian)             local i; for i in debian:11 debian:10 debian:9 debian:latest; do main_debian "$i"; done
+        # debian)             local i; for i in debian:11 debian:10 debian:9 debian:latest; do main_debian "$i"; done
+        debian)             main_debian debian:latest
                             # rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
                             ;;
         debian:9)           main_debian debian-1-curl:9      && main_debian debian-2-dev:9      ;;
@@ -71,7 +72,8 @@ main_debian(){
 main_ubuntu(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
-        ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18 ubuntu:latest; do main_ubuntu "$i"; done
+        # ubuntu)             local i; for i in ubuntu:22 ubuntu:20 ubuntu:18 ubuntu:latest; do main_ubuntu "$i"; done
+        ubuntu)             main_ubuntu ubuntu:latest
                             # rename_pushx "xcmd/base-ubuntu-1-curl:22" "xcmd/base-ubuntu-1-curl"
                             ;;
         ubuntu:18)          main_ubuntu ubuntu-1-curl:18     && main_ubuntu ubuntu-2-dev:18     ;;

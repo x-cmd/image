@@ -1,4 +1,4 @@
 FROM --platform=$TARGETPLATFORM debian:latest
 
-RUN apt update && apt install --assume-yes curl && apt clean
+RUN apt-get upgrade && apt-get update && apt-get install --assume-yes curl && apt clean
 

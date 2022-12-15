@@ -9,17 +9,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      with:
+        platforms: 'arm64,arm'
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
     - name: Docker build
       run: |
         git clone https://github.com/x-cmd/image.git
         cd image
         docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
-        docker buildx create --use
         set +e
         # bash .x-cmd/image alpine
-        # bash .x-cmd/image debian
+        bash .x-cmd/image debian
         # bash .x-cmd/image ubuntu
-        bash .x-cmd/image centos
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

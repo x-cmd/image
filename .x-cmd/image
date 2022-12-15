@@ -53,7 +53,7 @@ main_debian(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
         # debian)             local i; for i in debian:11 debian:10 debian:9 debian:latest; do main_debian "$i"; done
-        debian)             PLATFORM="linux/amd64" main_debian debian:latest
+        debian)             main_debian debian:latest
                             # rename_pushx "xcmd/base-debian-1-curl:11" "xcmd/base-debian-1-curl"
                             ;;
         debian:9)           main_debian debian-1-curl:9      && main_debian debian-2-dev:9      ;;

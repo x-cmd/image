@@ -18,8 +18,8 @@ jobs:
         set +e
         # bash .x-cmd/image alpine
         # bash .x-cmd/image debian
-        bash .x-cmd/image ubuntu
-        # bash .x-cmd/image centos
+        # bash .x-cmd/image ubuntu
+        bash .x-cmd/image centos
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

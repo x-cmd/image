@@ -28,10 +28,14 @@ jobs:
         # bash .x-cmd/image ubuntu
         # bash .x-cmd/image arch
         # bash .x-cmd/image fedora
-        bash .x-cmd/image bash
+        # bash .x-cmd/image bash
         # bash .x-cmd/image gentoo
         # bash .x-cmd/image opensuse
         # bash .x-cmd/image oraclelinux
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Docker build bash
+      run: |
+        bash .x-cmd/image bash

@@ -17,17 +17,11 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Docker build
+    - name: Docker login
       run: |
         git clone https://github.com/x-cmd/image.git
         docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
         set +e
-        # bash .x-cmd/image alpine
-        # bash .x-cmd/image debian
-        # bash .x-cmd/image ubuntu
-        # bash .x-cmd/image arch
-        # bash .x-cmd/image fedora
-        # bash .x-cmd/image bash
         # bash .x-cmd/image gentoo
         # bash .x-cmd/image opensuse
         # bash .x-cmd/image oraclelinux
@@ -35,6 +29,15 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Docker build alpine
+      run: cd image && bash .x-cmd/image alpine
+    - name: Docker build debian
+      run: cd image && bash .x-cmd/image debian
+    - name: Docker build ubuntu
+      run: cd image && bash .x-cmd/image ubuntu
+    - name: Docker build arch
+      run: cd image && bash .x-cmd/image arch
+    - name: Docker build fedora
+      run: cd image && bash .x-cmd/image fedora
     - name: Docker build bash
-      run: |
-        cd image && bash .x-cmd/image bash
+      run: cd image && bash .x-cmd/image bash

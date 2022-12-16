@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # os: [ debian, ubuntu, alpine, bash, arch, fedora, opensuse, gentoo, oraclelinux ]
-        os: [ oraclelinux ]
+        os: [ debian, ubuntu, alpine, bash, arch, fedora, opensuse ]
+        # os: [ gentoo, oraclelinux ]
     steps:
 
     # Reference: https://blog.thesparktree.com/docker-multi-arch-github-actions

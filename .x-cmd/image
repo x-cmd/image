@@ -171,7 +171,7 @@ main(){
             # fedora*)        main_fedora     "$op" "$@" ;;
             # gentoo*)        main_gentoo     "$op" "$@" ;;
             # bash*)          main_bash       "$op" "$@" ;;
-            # opensuse*)      main_opensuse   "$op" "$@" ;;
+            opensuse*)      main_opensuse   "$op" "$@" ;;
             all|*)          main alpine && main debian && main ubuntu && main centos
         esac
     done

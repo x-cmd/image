@@ -26,8 +26,8 @@ jobs:
         # bash .x-cmd/image alpine
         # bash .x-cmd/image debian
         # bash .x-cmd/image ubuntu
-        bash .x-cmd/image arch
-        # bash .x-cmd/image opensuse
+        # bash .x-cmd/image arch
+        bash .x-cmd/image opensuse
         # bash .x-cmd/image fedora
         # bash .x-cmd/image oraclelinux
         # bash .x-cmd/image centos

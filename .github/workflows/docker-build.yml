@@ -20,7 +20,6 @@ jobs:
     - name: Docker build
       run: |
         git clone https://github.com/x-cmd/image.git
-        cd image
         docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
         set +e
         # bash .x-cmd/image alpine
@@ -38,4 +37,4 @@ jobs:
 
     - name: Docker build bash
       run: |
-        bash .x-cmd/image bash
+        bash image/.x-cmd/image bash

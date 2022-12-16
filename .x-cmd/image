@@ -168,7 +168,7 @@ main(){
             ubuntu*)        main_ubuntu     "$op" "$@" ;;
             centos*)        main_centos     "$op" "$@" ;;
             arch*)          main_arch       "$op" "$@" ;;
-            # fedora*)        main_fedora     "$op" "$@" ;;
+            fedora*)        main_fedora     "$op" "$@" ;;
             # gentoo*)        main_gentoo     "$op" "$@" ;;
             # bash*)          main_bash       "$op" "$@" ;;
             opensuse*)      main_opensuse   "$op" "$@" ;;

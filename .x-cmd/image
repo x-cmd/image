@@ -161,7 +161,7 @@ main_opensuse(){
 main_oraclelinux(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
-        oraclelinux)           main_oraclelinux oraclelinux-1-curl && main_oraclelinux oraclelinux-2-dev      ;;
+        oraclelinux)           PLATFORM="linux/arm64,linux/amd64" main_oraclelinux oraclelinux-1-curl && main_oraclelinux oraclelinux-2-dev      ;;
         oraclelinux-1-curl)    buildx src/oraclelinux xcmd/base-oraclelinux-1-curl  1-curl.Dockerfile   ;;
         oraclelinux-2-dev)     buildx src/oraclelinux xcmd/base-oraclelinux-2-dev   2-dev.Dockerfile    ;;
     esac

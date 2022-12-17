@@ -1,1 +1,1 @@
-FROM --platform=$TARGETPLATFORM oraclelinux
+FROM --platform=$TARGETPLATFORM oraclelinux:9

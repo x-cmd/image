@@ -5,6 +5,13 @@
 # cd "$(dirname "${BASH_SOURCE[0]}")"
 # cd ..
 
+prebuild(){
+    rm xbin
+    rm rc
+    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/xxx >xbin
+    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/rc >rc
+}
+
 buildx()(
     CDP="${1:?Provide cd into path}"
     IMAGE="${2:?Provide image}"
@@ -158,6 +165,8 @@ main_opensuse(){
 # EndSection
 
 main(){
+    prebuild
+
     while [ "$#" -gt 0 ]; do
         op="$1";    shift
         case "$op" in

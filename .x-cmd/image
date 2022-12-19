@@ -6,10 +6,10 @@
 # cd ..
 
 prebuild(){
-    rm xbin
-    rm rc
-    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/xxx >xbin
-    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/rc >rc
+    rm -rf .tmp/xbin .tmp/rc
+    mkdir -p .tmp
+    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/xxx >.tmp/xbin
+    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/rc >.tmp/rc
 }
 
 buildx()(
@@ -17,6 +17,7 @@ buildx()(
     IMAGE="${2:?Provide image}"
     FILE="${3:?Provide Dockerfile}"
 
+    cp .tmp/xbin .tmp/rc "$CDP"
     cd "$CDP" || return
 
     # docker build \
@@ -31,11 +32,14 @@ buildx()(
         -t "$IMAGE" . --push; then
 
         printf "%s\n" "Buildx fail. $IMAGE" >&2
+        rm -rf xbin rc
 
         # TODO: findout which specific platform is not supported by the specific os release.
         # exit 1
         return 1
     fi
+
+    rm -rf xbin rc
 )
 
 rename_pushx(){

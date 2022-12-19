@@ -1,6 +1,7 @@
 FROM --platform=$TARGETPLATFORM bash:3
 
 ADD xbin /bin/x
+RUN chmod +x /bin/x
 ADD rc /root/.bashrc
 ADD rc /root/.zshrc
 

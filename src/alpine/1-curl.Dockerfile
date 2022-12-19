@@ -1,6 +1,6 @@
 FROM --platform=$TARGETPLATFORM alpine
 
-ADD x /bin/x
+ADD xbin /bin/x
 ADD rc /root/.bashrc
 ADD rc /root/.zshrc
 

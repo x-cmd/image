@@ -1,0 +1,12 @@
+# shellcheck shell=sh disable=SC3043
+
+container=$(buildah from suse/sle15)
+buildah run "$container" zypper up
+buildah copy "$container" . /usr/src/example/
+buildah config --workingdir /usr/src/example "$container"
+buildah config --port 8000 "$container"
+buildah config --cmd "php -S 0.0.0.0:8000" "$container"
+buildah config --label maintainer="Tux" "$container"
+buildah config --label version="0.1" "$container"
+buildah commit "$container" example
+buildah rm "$container"

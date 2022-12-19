@@ -145,6 +145,7 @@ main_fedora(){
 # Section: gentoo
 main_gentoo(){
     local op="${1:?Provide image name}"; shift
+    local PLATFORM="linux/arm64"
     case "$op" in
         gentoo)             main_gentoo gentoo-1-curl && main_gentoo gentoo-2-dev          ;;
         gentoo-1-curl)      buildx src/gentoo xcmd/base-gentoo-1-curl  1-curl.Dockerfile   ;;
@@ -164,6 +165,18 @@ main_opensuse(){
 }
 # EndSection
 
+# Section: oraclelinux
+main_oraclelinux(){
+    local op="${1:?Provide image name}"; shift
+    local PLATFORM="linux/arm64,linux/amd64"
+    case "$op" in
+        oraclelinux)           main_oraclelinux oraclelinux-1-curl && main_oraclelinux oraclelinux-2-dev      ;;
+        oraclelinux-1-curl)    buildx src/oraclelinux xcmd/base-oraclelinux-1-curl  1-curl.Dockerfile   ;;
+        oraclelinux-2-dev)     buildx src/oraclelinux xcmd/base-oraclelinux-2-dev   2-dev.Dockerfile    ;;
+    esac
+}
+# EndSection
+
 main(){
     prebuild
 
@@ -179,7 +192,8 @@ main(){
             gentoo*)        main_gentoo     "$op" "$@" ;;
             bash*)          main_bash       "$op" "$@" ;;
             opensuse*)      main_opensuse   "$op" "$@" ;;
-            all|*)          main alpine && main debian && main ubuntu && main centos
+            oraclelinux*)   main_oraclelinux   "$op" "$@" ;;
+            all|*)          main alpine && main debian && main ubuntu && main centos ;;
         esac
     done
 }

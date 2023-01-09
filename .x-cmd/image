@@ -8,8 +8,8 @@
 prebuild(){
     rm -rf .tmp/xbin .tmp/rc
     mkdir -p .tmp
-    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/xxx >.tmp/xbin
-    curl https://raw.githubusercontent.com/x-cmd/x-cmd/main/mod/x-cmd/lib/bin/rc >.tmp/rc
+    curl https://raw.githubusercontent.com/x-cmd/x-cmd/latest/mod/x-cmd/lib/bin/xxx >.tmp/xbin
+    curl https://raw.githubusercontent.com/x-cmd/x-cmd/latest/mod/x-cmd/lib/bin/rc >.tmp/rc
 }
 
 buildx()(

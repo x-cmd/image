@@ -113,6 +113,14 @@ main_bash(){
 }
 # EndSection
 
+# Section: awk
+
+main_awk(){
+    buildx src/awk "xcmd/base-nawk-2-dev" "nawk-2-dev.Dockerfile"
+}
+
+# EndSection
+
 # Section: centos
 main_centos(){
     local op="${1:?Provide image name}"; shift
@@ -140,8 +148,8 @@ main_fedora(){
     local op="${1:?Provide image name}"; shift
     case "$op" in
         fedora)             main_fedora fedora-1-curl && main_fedora fedora-2-dev ;;
-        fedora-1-curl)      PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-1-curl  1-curl.Dockerfile   ;;
-        fedora-2-dev)       PLATFORM=linux/amd64 buildx src/fedora xcmd/base-fedora-2-dev   2-dev.Dockerfile    ;;
+        fedora-1-curl)      buildx src/fedora xcmd/base-fedora-1-curl  1-curl.Dockerfile   ;;
+        fedora-2-dev)       buildx src/fedora xcmd/base-fedora-2-dev   2-dev.Dockerfile    ;;
     esac
 }
 # EndSection
@@ -195,6 +203,7 @@ main(){
             fedora*)        main_fedora     "$op" "$@" ;;
             gentoo*)        main_gentoo     "$op" "$@" ;;
             bash*)          main_bash       "$op" "$@" ;;
+            awk*)           main_awk        "$op" "$@" ;;
             opensuse*)      main_opensuse   "$op" "$@" ;;
             oraclelinux*)   main_oraclelinux   "$op" "$@" ;;
             all|*)          main alpine && main debian && main ubuntu && main centos ;;

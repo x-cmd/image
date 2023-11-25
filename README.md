@@ -9,5 +9,14 @@ docker run --restart=always xcmd/ubu x --token `x token` frp -c l:frp/hq.ini
 ```
 
 ```bash
-docker run --restart=always xcmd/ubu x frp -c `$(x hub link --label frp-hq-1 l:frp/hq.ini)`
+docker run --restart=always xcmd/ubu x frp -c "$(x hub link --label frp-hq-1 l:frp/hq.ini)"
+```
+
+```bash
+docker run -v $(x hub which frp.ini):/data/frp.ini --restart=always xcmd/ubu x frp -c /data/frp.ini
+```
+
+```
+x frp --docker frp-srv --client me:frp/hq.srv.ini
+x frp --docker frp-cli --server me:frp/hq.cli.ini
 ```
